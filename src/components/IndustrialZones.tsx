@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, ArrowUp, CirclePlay } from "lucide-react";
@@ -20,6 +19,13 @@ type ZoneProps = {
   area: string;
   image: string;
   year?: string;
+}
+
+// Update the ZoneCard props type to include onClick
+type ZoneCardProps = {
+  zone: ZoneProps;
+  isActive: boolean;
+  onClick?: () => void; // Add onClick as an optional prop
 }
 
 const zones: ZoneProps[] = [
@@ -79,13 +85,14 @@ const zones: ZoneProps[] = [
   },
 ];
 
-const ZoneCard = ({ zone, isActive }: { zone: ZoneProps, isActive: boolean }) => {
+const ZoneCard = ({ zone, isActive, onClick }: ZoneCardProps) => {
   return (
     <div 
       className={cn(
         "transition-all duration-300 group",
         isActive ? "w-full flex-1" : "w-24 cursor-pointer"
       )}
+      onClick={onClick} // Use onClick handler
     >
       <div 
         className={cn(
