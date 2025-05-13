@@ -7,6 +7,7 @@ import HeroSection from "../components/HeroSection";
 import QuickLinks from "../components/QuickLinks";
 import FeaturedEvents from "../components/FeaturedEvents";
 import NewsSection from "../components/NewsSection";
+import ZonesOverview from "../components/ZonesOverview";
 import IndustrialZones from "../components/IndustrialZones";
 import Footer from "../components/Footer";
 
@@ -26,6 +27,7 @@ const Index = () => {
         <QuickLinks />
         <FeaturedEvents />
         <NewsSection />
+        <ZonesOverview />
         <IndustrialZones />
       </main>
       <Footer />
