@@ -63,8 +63,8 @@ const MediaLibrary: React.FC = () => {
 
   return (
     <section className="w-full py-16 px-6 bg-background">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold font-montserrat mb-8 text-foreground">
+      <div className="container mx-auto">
+        <h2 className="text-3xl font-bold mb-8 text-foreground">
           Tư liệu
         </h2>
         

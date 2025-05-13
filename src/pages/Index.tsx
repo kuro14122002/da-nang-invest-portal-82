@@ -31,8 +31,8 @@ const Index = () => {
         <NewsSection />
         <ZonesOverview />
         <InvestmentInfo />
-        <MediaLibrary />
         <LocationSection />
+        <MediaLibrary />
       </main>
       <Footer />
     </div>
