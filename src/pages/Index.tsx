@@ -11,6 +11,7 @@ import ZonesOverview from "../components/ZonesOverview";
 import InvestmentInfo from "../components/InvestmentInfo";
 import MediaLibrary from "../components/MediaLibrary";
 import LocationSection from "../components/LocationSection";
+import BusinessPartners from "../components/BusinessPartners";
 import Footer from "../components/Footer";
 
 const Index = () => {
@@ -33,6 +34,7 @@ const Index = () => {
         <InvestmentInfo />
         <LocationSection />
         <MediaLibrary />
+        <BusinessPartners />
       </main>
       <Footer />
     </div>
