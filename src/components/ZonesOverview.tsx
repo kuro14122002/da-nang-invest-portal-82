@@ -75,14 +75,14 @@ const ZonesOverview = () => {
   const [selectedZone, setSelectedZone] = useState(zones[0]);
 
   return (
-    <section className="w-full py-16 px-6 bg-dseza-dark-bg text-white">
+    <section className="w-full py-16 px-6 bg-white dark:bg-dseza-dark-bg text-foreground">
       <div className="container mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold uppercase text-center mb-10 max-w-5xl mx-auto leading-tight">
           KHU CÔNG NGHỆ CAO, TRUNG TÂM VI MẠCH BÁN DẪN VÀ TRÍ TUỆ NHÂN TẠO, CÁC KHU CÔNG NGHIỆP, KHU CNTT TẬP TRUNG, KHU THƯƠNG MẠI TỰ DO
         </h2>
         
         {/* Featured Zone Display */}
-        <div className="relative w-full pt-[40%] rounded-xl overflow-hidden">
+        <div className="relative w-full pt-[40%] rounded-xl overflow-hidden shadow-lg">
           <img 
             src={selectedZone.image}
             alt={selectedZone.name}
@@ -103,7 +103,7 @@ const ZonesOverview = () => {
               <div className="text-right mb-1">Tỉ lệ lấp đầy: {selectedZone.occupancy}%</div>
               <div className="w-40 h-2 bg-white/30 rounded-full">
                 <div 
-                  className="h-full rounded-full bg-dseza-dark-primary" 
+                  className="h-full rounded-full bg-accent" 
                   style={{ width: `${selectedZone.occupancy}%` }}
                 />
               </div>
@@ -119,8 +119,8 @@ const ZonesOverview = () => {
               key={zone.id}
               className={`relative min-w-[220px] h-36 rounded-lg overflow-hidden cursor-pointer transition-all ${
                 selectedZone.id === zone.id
-                  ? "border-4 border-dseza-dark-primary"
-                  : "border-2 border-transparent hover:border-2 hover:border-dseza-dark-primary/60"
+                  ? "border-4 border-accent"
+                  : "border-2 border-transparent hover:border-2 hover:border-accent/60"
               }`}
               onClick={() => setSelectedZone(zone)}
             >
@@ -140,8 +140,10 @@ const ZonesOverview = () => {
           {zones.map((zone) => (
             <div 
               key={`thumbnail-${zone.id}`}
-              className={`bg-white/10 rounded-md p-4 text-center text-white cursor-pointer transition-all ${
-                selectedZone.id === zone.id ? "border-b-2 border-dseza-dark-primary" : "opacity-60 hover:opacity-100"
+              className={`bg-secondary/50 dark:bg-dseza-dark-secondary rounded-md p-4 text-center cursor-pointer transition-all ${
+                selectedZone.id === zone.id 
+                  ? "border-b-2 border-accent shadow-md"
+                  : "opacity-60 hover:opacity-100"
               }`}
               onClick={() => setSelectedZone(zone)}
             >
