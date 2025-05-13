@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Users } from "lucide-react";
 
-const ZonesOverview = () => {
+export default function ZonesOverview() {
   // List of zones with data
   const zones = [
     {
@@ -75,7 +75,7 @@ const ZonesOverview = () => {
   const [selectedZone, setSelectedZone] = useState(zones[0]);
 
   return (
-    <section className="w-full py-16 px-6 bg-white dark:bg-dseza-dark-bg text-foreground">
+    <section className="w-full py-16 px-6 bg-background">
       <div className="container mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold uppercase text-center mb-10 max-w-5xl mx-auto leading-tight">
           KHU CÔNG NGHỆ CAO, TRUNG TÂM VI MẠCH BÁN DẪN VÀ TRÍ TUỆ NHÂN TẠO, CÁC KHU CÔNG NGHIỆP, KHU CNTT TẬP TRUNG, KHU THƯƠNG MẠI TỰ DO
@@ -92,7 +92,7 @@ const ZonesOverview = () => {
           
           <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
             <div className="text-white">
-              <h3 className="text-xl md:text-2xl font-bold font-['Montserrat'] mb-2">{selectedZone.name}</h3>
+              <h3 className="text-xl md:text-2xl font-bold mb-2">{selectedZone.name}</h3>
               <div className="flex items-center gap-x-2">
                 <Users size={18} />
                 <span>{selectedZone.enterprises} Doanh nghiệp</span>
@@ -103,11 +103,11 @@ const ZonesOverview = () => {
               <div className="text-right mb-1">Tỉ lệ lấp đầy: {selectedZone.occupancy}%</div>
               <div className="w-40 h-2 bg-white/30 rounded-full">
                 <div 
-                  className="h-full rounded-full bg-accent" 
+                  className="h-full rounded-full bg-primary dark:bg-dseza-dark-primary" 
                   style={{ width: `${selectedZone.occupancy}%` }}
                 />
               </div>
-              <div className="text-right mt-1 text-sm">Diện tích: {selectedZone.area}</div>
+              <div className="text-right mt-1">Diện tích: {selectedZone.area}</div>
             </div>
           </div>
         </div>
@@ -119,8 +119,8 @@ const ZonesOverview = () => {
               key={zone.id}
               className={`relative min-w-[220px] h-36 rounded-lg overflow-hidden cursor-pointer transition-all ${
                 selectedZone.id === zone.id
-                  ? "border-4 border-accent"
-                  : "border-2 border-transparent hover:border-2 hover:border-accent/60"
+                  ? "border-4 border-primary dark:border-dseza-dark-primary"
+                  : "border-2 border-transparent hover:border-2 hover:border-primary/60 dark:hover:border-dseza-dark-primary/60"
               }`}
               onClick={() => setSelectedZone(zone)}
             >
@@ -130,30 +130,31 @@ const ZonesOverview = () => {
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-black/40" />
-              <h5 className="absolute bottom-3 left-3 text-white font-['Montserrat'] font-medium">{zone.name}</h5>
+              <h5 className="absolute bottom-3 left-3 text-white">{zone.name}</h5>
             </div>
           ))}
         </div>
         
-        {/* Grid of thumbnails with visual indicator of selection */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-4 mt-8">
+        {/* Grid View of Zones (alternative selection) */}
+        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
           {zones.map((zone) => (
             <div 
               key={`thumbnail-${zone.id}`}
-              className={`bg-secondary/50 dark:bg-dseza-dark-secondary rounded-md p-4 text-center cursor-pointer transition-all ${
+              className={`bg-secondary/50 dark:bg-dseza-dark-secondary/70 rounded-md p-4 text-center cursor-pointer transition-all ${
                 selectedZone.id === zone.id 
-                  ? "border-b-2 border-accent shadow-md"
-                  : "opacity-60 hover:opacity-100"
+                  ? "border-b-2 border-primary dark:border-dseza-dark-primary shadow-md"
+                  : "opacity-80 hover:opacity-100"
               }`}
               onClick={() => setSelectedZone(zone)}
             >
-              <div className="text-xs uppercase">{zone.name}</div>
+              <div className="font-medium">{zone.name}</div>
+              <div className="text-sm text-muted-foreground">
+                {zone.enterprises} DN | {zone.area}
+              </div>
             </div>
           ))}
         </div>
       </div>
     </section>
   );
-};
-
-export default ZonesOverview;
+}
