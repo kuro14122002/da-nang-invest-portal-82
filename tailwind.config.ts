@@ -131,6 +131,16 @@ export default {
 						opacity: '1'
 					}
 				},
+				'fade-down': {
+					'0%': {
+						transform: 'translateY(-10px)',
+						opacity: '0'
+					},
+					'100%': {
+						transform: 'translateY(0)',
+						opacity: '1'
+					}
+				},
 				'slide-left': {
 					'0%': {
 						transform: 'translateX(20px)',
@@ -156,6 +166,7 @@ export default {
 				'fade-in': 'fade-in 0.5s ease-out',
 				'slide-in': 'slide-in 0.5s ease-out',
 				'slide-down': 'slide-down 0.3s ease-out',
+				'fade-down': 'fade-down 0.2s ease-out',
 				'slide-left': 'slide-left 0.3s ease-out',
 				'scroll-x': 'scroll-x 30s linear infinite'
 			}

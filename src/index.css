@@ -97,11 +97,33 @@
 
 @layer components {
   .glass-nav {
-    @apply bg-white/10 dark:bg-dseza-dark-secondary/50 backdrop-blur-md border-b border-gray-200 dark:border-dseza-dark-hover;
+    @apply bg-white/70 dark:bg-dseza-dark-secondary/80 backdrop-blur-md border-b border-gray-200 dark:border-dseza-dark-hover;
   }
   
   .dropdown-content {
     @apply invisible absolute opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 z-50;
+  }
+  
+  .mega-menu-container {
+    @apply shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),_0_10px_10px_-5px_rgba(0,0,0,0.04)];
+    @apply animate-fadeDown;
+  }
+
+  /* Customize scrollbar for mega menus */
+  .mega-menu-container::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .mega-menu-container::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-700;
+  }
+
+  .mega-menu-container::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-500 rounded-full;
+  }
+
+  .mega-menu-container::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-400;
   }
 }
 
@@ -112,5 +134,22 @@
   
   .writing-vertical-lr {
     writing-mode: vertical-lr;
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .animate-fadeDown {
+    animation: fadeDown 0.2s ease-out forwards;
   }
 }

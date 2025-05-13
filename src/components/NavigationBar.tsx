@@ -1,200 +1,561 @@
 
-import { useState } from 'react';
-import { ChevronDownIcon } from 'lucide-react';
+import { useRef, useState, useEffect } from 'react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { cn } from "@/lib/utils";
+import MegaMenu from './MegaMenu';
 
-type SubMenuItem = {
+type MegaMenuContentType = {
   title: string;
-  url: string;
-  items?: SubMenuItem[];
+  url?: string;
+  iconName?: string;
+  items?: {
+    title: string;
+    url: string;
+    subItems?: { title: string; url: string }[];
+  }[];
+};
+
+type MegaMenuColumnType = {
+  title: string;
+  contents: MegaMenuContentType[];
+  specialContent?: React.ReactNode;
+};
+
+type MegaMenuConfigType = {
+  columns: MegaMenuColumnType[];
+  featuredContent?: React.ReactNode;
 };
 
 type MenuItem = {
   title: string;
   url: string;
-  items?: SubMenuItem[];
+  megaMenuConfig?: MegaMenuConfigType;
 };
 
 const NavigationBar = () => {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeMenuIndex, setActiveMenuIndex] = useState<number | null>(null);
+  const navRef = useRef<HTMLElement>(null);
 
-  // Mock menu data structure based on the requirements
+  // Close the mega menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setActiveMenuIndex(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleMenuClick = (index: number) => {
+    setActiveMenuIndex(activeMenuIndex === index ? null : index);
+  };
+
+  // Menu data structure based on the requirements
   const menuItems: MenuItem[] = [
     {
       title: "Giới thiệu",
       url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/gioi-thieu/",
-      items: [
-        {
-          title: "Giới thiệu",
-          url: "#",
-          items: [
-            { title: "Thư ngỏ", url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/thu-ngo/" },
-            { title: "Tổng quan về Đà Nẵng", url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/tong-quan-ve-tpda-nang/" },
-            { title: "Tổng quan về Ban Quản lý", url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/gioi-thieu/tong-quan-ve-ban-quan-ly/" },
-            { title: "Chức năng, nhiệm vụ, quyền hạn Ban Quản lý", url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/chuc-nang-nhiem-vu-quyen-han-ban-quan-ly/" },
-            { title: "Các phòng ban", url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/cac-phong-ban/" },
-            { title: "Đơn vị trực thuộc", url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/don-vi-truc-thuoc/" }
-          ]
-        },
-        {
-          title: "Khu hành chính",
-          url: "#",
-          items: [
-            { title: "Khu công nghệ cao Đà Nẵng", url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghe-cao-da-nang/" },
-            { title: "Khu thương mại tự do Đà Nẵng", url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-thuong-mai-tu-do-da-nang/" },
-            { title: "Khu CNTT tập trung", url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghe-thong-tin-tap-trung/" },
-            { title: "Các Khu công nghiệp Đà Nẵng", url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/gioi-thieu/khu-hanh-chinh/cac-khu-cong-nghiep-da-nang/" }
-          ]
-        }
-      ]
+      megaMenuConfig: {
+        columns: [
+          {
+            title: "Giới thiệu chung",
+            contents: [
+              {
+                title: "Thư ngỏ",
+                url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/thu-ngo/",
+                iconName: "general-partner"
+              },
+              {
+                title: "Tổng quan về Đà Nẵng",
+                url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/tong-quan-ve-tpda-nang/",
+                iconName: "real-estate"
+              },
+              {
+                title: "Tổng quan về Ban Quản lý",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/gioi-thieu/tong-quan-ve-ban-quan-ly/",
+                iconName: "business-development"
+              },
+              {
+                title: "Chức năng, nhiệm vụ, quyền hạn Ban Quản lý",
+                url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/chuc-nang-nhiem-vu-quyen-han-ban-quan-ly/",
+                iconName: "chief-financial-officer"
+              },
+              {
+                title: "Các phòng ban",
+                url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/cac-phong-ban/",
+                iconName: "investor-relations"
+              },
+              {
+                title: "Đơn vị trực thuộc",
+                url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/don-vi-truc-thuoc/",
+                iconName: "family-offices"
+              },
+            ]
+          },
+          {
+            title: "Các Khu chức năng",
+            contents: [
+              {
+                title: "Khu công nghệ cao Đà Nẵng",
+                url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghe-cao-da-nang/",
+                iconName: "venture-capital"
+              },
+              {
+                title: "Khu thương mại tự do Đà Nẵng",
+                url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-thuong-mai-tu-do-da-nang/",
+                iconName: "private-equity"
+              },
+              {
+                title: "Khu CNTT tập trung",
+                url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghe-thong-tin-tap-trung/",
+                iconName: "corporate-venture-capital"
+              },
+              {
+                title: "Các Khu công nghiệp Đà Nẵng",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/gioi-thieu/khu-hanh-chinh/cac-khu-cong-nghiep-da-nang/",
+                iconName: "private-debt",
+                items: [
+                  {
+                    title: "Khu công nghiệp Hòa ninh",
+                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-hoa-ninh/"
+                  },
+                  {
+                    title: "Khu công nghiệp Hòa Khánh",
+                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-hoa-khanh/"
+                  },
+                  {
+                    title: "Khu công nghiệp Hòa Khánh mở rộng",
+                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-hoa-khanh-mo-rong/"
+                  },
+                  {
+                    title: "Khu công nghiệp Hòa Cầm",
+                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-hoa-cam/"
+                  },
+                  {
+                    title: "Khu công nghiệp Liên Chiểu",
+                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-lien-chieu/"
+                  },
+                  {
+                    title: "Khu công nghiệp Dịch vụ Thủy sản Đà Nẵng",
+                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-dich-vu-thuy-san-da-nang/"
+                  },
+                  {
+                    title: "Khu công nghiệp Đà Nẵng",
+                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-da-nang/"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            title: "Thành tựu nổi bật",
+            contents: [
+              {
+                title: "Thành tựu nổi bật của Đà Nẵng",
+                url: "#",
+                iconName: "hedge-fund"
+              }
+            ],
+            specialContent: (
+              <div className="p-4 rounded-lg bg-dseza-dark-accent dark:bg-dseza-dark-primary text-white mt-4">
+                <h5 className="font-semibold mb-2">Thành tựu đã đạt được</h5>
+                <p className="text-sm">Khu Công nghệ cao và các Khu Công nghiệp Đà Nẵng đã trở thành động lực quan trọng cho sự phát triển của thành phố.</p>
+                <button className="mt-3 bg-white text-dseza-dark-accent dark:text-dseza-dark-primary py-2 px-3 rounded text-sm font-medium">Tìm hiểu thêm</button>
+              </div>
+            )
+          }
+        ]
+      }
     },
     {
       title: "Tin tức",
       url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/",
-      items: [
-        {
-          title: "Tin tức | Sự kiện",
-          url: "#",
-          items: [
-            { title: "Đầu tư - Hợp tác Quốc tế", url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/dau-tu-hop-tac-quoc-te/" },
-            { title: "Doanh nghiệp", url: "#" },
-            { title: "Chuyển đổi số", url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/chuyen-doi-so/" },
-            { title: "Đào tạo, Ươm tạo Khởi nghiệp", url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/dao-tao-uom-tao-khoi-nghiep/" }
-          ]
-        },
-        {
-          title: "Xem thêm",
-          url: "#",
-          items: [
-            { title: "Lịch công tác", url: "https://dseza.danang.gov.vn/lich-cong-tac/" },
-            { title: "Thông báo", url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/thong-bao/" },
-            { title: "Thông tin báo chí", url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/thong-tin-bao-chi/" }
-          ]
-        }
-      ]
+      megaMenuConfig: {
+        columns: [
+          {
+            title: "Tin tức | Sự kiện",
+            contents: [
+              {
+                title: "Đầu tư - Hợp tác Quốc tế",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/dau-tu-hop-tac-quoc-te/",
+                iconName: "business-development"
+              },
+              {
+                title: "Doanh nghiệp",
+                url: "#",
+                iconName: "wealth-management"
+              },
+              {
+                title: "Chuyển đổi số",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/chuyen-doi-so/",
+                iconName: "ria"
+              },
+              {
+                title: "Đào tạo, Ươm tạo Khởi nghiệp",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/dao-tao-uom-tao-khoi-nghiep/",
+                iconName: "investor-relations"
+              },
+              {
+                title: "Hoạt động Ban Quản lý",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/hoat-dong-ban-quan-ly/",
+                iconName: "chief-financial-officer"
+              },
+              {
+                title: "Tin khác",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/tin-khac/",
+                iconName: "real-estate"
+              }
+            ]
+          },
+          {
+            title: "Xem thêm",
+            contents: [
+              {
+                title: "Lịch công tác",
+                url: "https://dseza.danang.gov.vn/lich-cong-tac/",
+                iconName: "family-offices"
+              },
+              {
+                title: "Thông báo",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/thong-bao/",
+                iconName: "venture-capital"
+              },
+              {
+                title: "Thông tin báo chí",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/thong-tin-bao-chi/",
+                iconName: "corporate-venture-capital"
+              }
+            ]
+          },
+          {
+            title: "Tin nổi bật",
+            contents: [],
+            specialContent: (
+              <div className="bg-dseza-light-secondary dark:bg-dseza-dark-secondary rounded-lg overflow-hidden">
+                <img 
+                  src="https://picsum.photos/400/200" 
+                  alt="Featured news" 
+                  className="w-full h-32 object-cover"
+                />
+                <div className="p-4">
+                  <h5 className="font-semibold text-sm mb-2 line-clamp-2">Tin tức mới nhất về hoạt động của Ban quản lý</h5>
+                  <p className="text-xs text-muted-foreground mb-3 line-clamp-2">Cập nhật thông tin mới nhất về các hoạt động và sự kiện quan trọng.</p>
+                  <a href="#" className="text-dseza-light-primary dark:text-dseza-dark-primary text-xs font-medium">Xem thêm →</a>
+                </div>
+              </div>
+            )
+          }
+        ]
+      }
     },
     {
       title: "Doanh nghiệp",
       url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/doanh-nghiep/",
-      items: [
-        {
-          title: "Báo cáo",
-          url: "#",
-          items: [
-            { title: "Báo cáo trực tuyến về DSEZA", url: "https://maps.dhpiza.vn/login?ReturnUrl=%2Fadmin%2Fbaocaonhadautu%2Fyeucaubaocao" },
-            { title: "Báo cáo giám sát và đánh giá đầu tư", url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/doanh-nghiep/bao-cao-giam-sat-va-danh-gia-dau-tu/" },
-            { title: "Mẫu | Bảng biểu báo cáo", url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/doanh-nghiep/mau-bang-bieu-bao-cao/" }
-          ]
-        }
-      ]
+      megaMenuConfig: {
+        columns: [
+          {
+            title: "Báo cáo & Dữ liệu",
+            contents: [
+              {
+                title: "Báo cáo trực tuyến về DSEZA",
+                url: "https://maps.dhpiza.vn/login?ReturnUrl=%2Fadmin%2Fbaocaonhadautu%2Fyeucaubaocao",
+                iconName: "ria"
+              },
+              {
+                title: "Báo cáo giám sát và đánh giá đầu tư",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/doanh-nghiep/bao-cao-giam-sat-va-danh-gia-dau-tu/",
+                iconName: "business-development"
+              },
+              {
+                title: "Mẫu | Bảng biểu báo cáo",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/doanh-nghiep/mau-bang-bieu-bao-cao/",
+                iconName: "wealth-management"
+              }
+            ]
+          },
+          {
+            title: "Thông tin Doanh nghiệp",
+            contents: [
+              {
+                title: "Thủ tục | Hồ sơ | Dữ liệu môi trường",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/doanh-nghiep/thu-tuc-ho-so-du-lieu-moi-truong/",
+                iconName: "venture-capital"
+              },
+              {
+                title: "Thống kê doanh nghiệp",
+                url: "https://dseza.danang.gov.vn/thong-ke-doanh-nghiep/",
+                iconName: "private-debt"
+              },
+              {
+                title: "Tuyển dụng",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/doanh-nghiep/tuyen-dung/",
+                iconName: "private-equity"
+              }
+            ]
+          },
+          {
+            title: "Hỗ trợ doanh nghiệp",
+            contents: [],
+            specialContent: (
+              <div className="p-4 rounded-lg bg-dseza-light-primary/10 dark:bg-dseza-dark-primary/20 mt-4">
+                <h5 className="font-semibold mb-2 text-dseza-light-primary dark:text-dseza-dark-primary">Dịch vụ hỗ trợ</h5>
+                <p className="text-sm">Chúng tôi cung cấp nhiều dịch vụ hỗ trợ cho doanh nghiệp trong các Khu công nghiệp.</p>
+                <button className="mt-3 bg-dseza-light-primary dark:bg-dseza-dark-primary text-white py-2 px-3 rounded text-sm font-medium">Liên hệ hỗ trợ</button>
+              </div>
+            )
+          }
+        ]
+      }
     },
     {
       title: "Cẩm nang đầu tư",
       url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/cam-nang-dau-tu/",
-      items: []
+      megaMenuConfig: {
+        columns: [
+          {
+            title: "Thông tin đầu tư",
+            contents: [
+              {
+                title: "Hướng dẫn đầu tư",
+                url: "#",
+                iconName: "investor-relations"
+              },
+              {
+                title: "Chính sách ưu đãi",
+                url: "#",
+                iconName: "chief-financial-officer"
+              },
+              {
+                title: "Quy trình đầu tư",
+                url: "#",
+                iconName: "business-development"
+              },
+              {
+                title: "Các mô hình đầu tư",
+                url: "#",
+                iconName: "private-equity"
+              }
+            ]
+          },
+          {
+            title: "Tài liệu tham khảo",
+            contents: [
+              {
+                title: "Báo cáo thường niên",
+                url: "#",
+                iconName: "real-estate"
+              },
+              {
+                title: "Tài liệu thu hút đầu tư",
+                url: "#",
+                iconName: "hedge-fund"
+              },
+              {
+                title: "Thông tin thị trường",
+                url: "#",
+                iconName: "family-offices"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       title: "Văn bản",
       url: "https://dseza.danang.gov.vn/van-ban/",
-      items: [
-        {
-          title: "Văn bản pháp luật",
-          url: "#",
-          items: [
-            { title: "Văn bản pháp quy trung ương", url: "https://dseza.danang.gov.vn/van-ban/van-ban-phap-quy-tw/" },
-            { title: "Văn bản pháp quy địa phương", url: "https://dseza.danang.gov.vn/van-ban/van-ban-phap-quy-dia-phuong/" },
-            { title: "Văn bản chỉ đạo điều hành", url: "https://dseza.danang.gov.vn/van-ban/van-ban-chi-dao-dieu-hanh/" }
-          ]
-        }
-      ]
+      megaMenuConfig: {
+        columns: [
+          {
+            title: "Văn bản Pháp luật",
+            contents: [
+              {
+                title: "Văn bản pháp quy trung ương",
+                url: "https://dseza.danang.gov.vn/van-ban/van-ban-phap-quy-tw/",
+                iconName: "general-partner"
+              },
+              {
+                title: "Văn bản pháp quy địa phương",
+                url: "https://dseza.danang.gov.vn/van-ban/van-ban-phap-quy-dia-phuong/",
+                iconName: "real-estate"
+              },
+              {
+                title: "Văn bản chỉ đạo điều hành",
+                url: "https://dseza.danang.gov.vn/van-ban/van-ban-chi-dao-dieu-hanh/",
+                iconName: "chief-financial-officer"
+              },
+              {
+                title: "Văn bản CCHC",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/van-ban/van-ban-cai-cach-hanh-chinh/",
+                iconName: "business-development"
+              }
+            ]
+          },
+          {
+            title: "Hướng dẫn & Góp ý",
+            contents: [
+              {
+                title: "Văn bản hướng dẫn",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/van-ban/van-ban-huong-dan/",
+                iconName: "investor-relations"
+              },
+              {
+                title: "Góp ý dự thảo văn bản",
+                url: "https://dseza.danang.gov.vn/gop-y-du-thao-van-ban/",
+                iconName: "family-offices"
+              }
+            ]
+          },
+          {
+            title: "Tra cứu văn bản",
+            contents: [
+              {
+                title: "Hệ thống tra cứu văn bản",
+                url: "#",
+                iconName: "venture-capital"
+              }
+            ],
+            specialContent: (
+              <div className="mt-4 p-4 border rounded-lg">
+                <h5 className="font-semibold mb-2">Tra cứu văn bản nhanh</h5>
+                <input 
+                  type="text" 
+                  placeholder="Nhập từ khóa tìm kiếm..."
+                  className="w-full px-3 py-2 border rounded mt-2 mb-2 dark:bg-dseza-dark-secondary dark:border-dseza-dark-hover"
+                />
+                <button className="w-full bg-dseza-light-primary dark:bg-dseza-dark-primary text-white py-2 rounded text-sm font-medium">
+                  Tìm kiếm
+                </button>
+              </div>
+            )
+          }
+        ]
+      }
     },
     {
       title: "Cải cách hành chính",
       url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/moi-truong-dau-tu/cai-cach-hanh-chinh/",
-      items: [
-        {
-          title: "Ứng dụng và dịch vụ",
-          url: "#",
-          items: [
-            { title: "Dịch vụ công trực tuyến", url: "https://dichvucong.danang.gov.vn/" },
-            { title: "Bưu chính công ích", url: "https://egov.danang.gov.vn/dailyDVc" },
-            { title: "Tra cứu hồ sơ", url: "https://dichvucong.danang.gov.vn/web/guest/tra-cuu-ho-so" }
-          ]
-        }
-      ]
+      megaMenuConfig: {
+        columns: [
+          {
+            title: "Ứng dụng & Dịch vụ",
+            contents: [
+              {
+                title: "Dịch vụ công trực tuyến",
+                url: "https://dichvucong.danang.gov.vn/",
+                iconName: "ria"
+              },
+              {
+                title: "Bưu chính công ích",
+                url: "https://egov.danang.gov.vn/dailyDVc",
+                iconName: "wealth-management"
+              },
+              {
+                title: "Tra cứu hồ sơ",
+                url: "https://dichvucong.danang.gov.vn/web/guest/tra-cuu-ho-so",
+                iconName: "venture-capital"
+              },
+              {
+                title: "Đặt lịch hẹn giao dịch trực tuyến",
+                url: "http://49.156.54.87/index.php?option=com_hengio&view=hengioonline&task=formdangkyonline&tmpl=widget",
+                iconName: "private-equity"
+              },
+              {
+                title: "Đánh giá chất lượng dịch vụ HCC",
+                url: "https://dichvucong.danang.gov.vn/web/guest/-anh-gia",
+                iconName: "private-debt"
+              }
+            ]
+          },
+          {
+            title: "Thông tin & Quy trình",
+            contents: [
+              {
+                title: "Thủ tục hành chính",
+                url: "https://dichvucong.danang.gov.vn/",
+                iconName: "corporate-venture-capital"
+              },
+              {
+                title: "Quy trình thực hiện thủ tục hành chính",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/danh-cho-nha-dau-tu/quy-trinh-thuc-hien-thu-tuc-hanh-chinh/",
+                iconName: "hedge-fund"
+              },
+              {
+                title: "Quy trình lĩnh vực đầu tư",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/danh-cho-nha-dau-tu/quy-trinh-linh-vuc-dau-tu/",
+                iconName: "family-offices"
+              },
+              {
+                title: "Văn bản cải cách hành chính",
+                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/van-ban/van-ban-cai-cach-hanh-chinh/",
+                iconName: "general-partner"
+              }
+            ]
+          },
+          {
+            title: "Dịch vụ công nổi bật",
+            contents: [],
+            specialContent: (
+              <div className="mt-4 p-4 bg-dseza-light-accent dark:bg-dseza-dark-accent text-white rounded-lg">
+                <h5 className="font-semibold mb-2">Dịch vụ công nổi bật</h5>
+                <p className="text-sm mb-3">Trải nghiệm dịch vụ công trực tuyến tại Ban quản lý Khu công nghệ cao và các Khu công nghiệp Đà Nẵng</p>
+                <a 
+                  href="https://dichvucong.danang.gov.vn/" 
+                  className="inline-block bg-white text-dseza-light-accent dark:text-dseza-dark-accent py-2 px-4 rounded text-sm font-medium"
+                >
+                  Truy cập ngay
+                </a>
+              </div>
+            )
+          }
+        ]
+      }
     },
     {
       title: "Liên hệ",
       url: "https://dseza.danang.gov.vn/lien-he/",
-      items: []
+      // No mega menu for this item
     }
   ];
 
-  const handleMouseEnter = (index: number) => {
-    setActiveIndex(index);
-  };
-
-  const handleMouseLeave = () => {
-    setActiveIndex(null);
-  };
-
   return (
-    <nav className="glass-nav sticky top-0 z-20">
-      <div className="container mx-auto">
-        <ul className="flex justify-between">
+    <nav ref={navRef} className="glass-nav sticky top-0 z-30">
+      <div className="container mx-auto px-6">
+        <ul className="flex gap-x-8">
           {menuItems.map((item, index) => (
-            <li 
-              key={index}
-              className="group relative py-4 px-3 hover:text-dseza-light-primary-hover dark:hover:text-dseza-dark-primary"
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}
-            >
-              <a 
-                href={item.url}
-                className="flex items-center gap-1 text-sm font-medium"
+            <li key={index} className="py-4">
+              <button 
+                className={cn(
+                  "flex items-center font-medium text-base transition-colors",
+                  activeMenuIndex === index 
+                    ? "text-dseza-light-primary-hover dark:text-dseza-dark-primary" 
+                    : "hover:text-dseza-light-primary dark:hover:text-dseza-dark-primary"
+                )}
+                onClick={() => handleMenuClick(index)}
               >
                 {item.title}
-                {item.items && item.items.length > 0 && (
-                  <ChevronDownIcon className="h-4 w-4 transition-transform group-hover:rotate-180" />
+                {item.megaMenuConfig && (
+                  <span className="ml-1">
+                    {activeMenuIndex === index ? (
+                      <ChevronUp className="h-4 w-4" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4" />
+                    )}
+                  </span>
                 )}
-              </a>
-              
-              {item.items && item.items.length > 0 && activeIndex === index && (
-                <div className="dropdown-content bg-white dark:bg-dseza-dark-secondary w-60 mt-4 py-2 rounded-md shadow-lg border border-gray-200 dark:border-dseza-dark-hover animate-slide-down">
-                  {item.items.map((subItem, subIndex) => (
-                    <div key={subIndex} className="relative group/sub">
-                      <a 
-                        href={subItem.url}
-                        className="block px-4 py-2 hover:bg-dseza-light-hover dark:hover:bg-dseza-dark-hover"
-                      >
-                        <div className="flex items-center justify-between">
-                          <span>{subItem.title}</span>
-                          {subItem.items && subItem.items.length > 0 && (
-                            <ChevronDownIcon className="h-4 w-4 -rotate-90" />
-                          )}
-                        </div>
-                      </a>
-                      
-                      {subItem.items && subItem.items.length > 0 && (
-                        <div className="invisible absolute left-full top-0 w-60 bg-white dark:bg-dseza-dark-secondary rounded-md shadow-lg border border-gray-200 dark:border-dseza-dark-hover group-hover/sub:visible">
-                          {subItem.items.map((nestedItem, nestedIndex) => (
-                            <a 
-                              key={nestedIndex}
-                              href={nestedItem.url}
-                              className="block px-4 py-2 hover:bg-dseza-light-hover dark:hover:bg-dseza-dark-hover"
-                            >
-                              {nestedItem.title}
-                            </a>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
+              </button>
             </li>
           ))}
         </ul>
       </div>
+
+      {/* Mega Menu */}
+      {activeMenuIndex !== null && menuItems[activeMenuIndex].megaMenuConfig && (
+        <MegaMenu config={menuItems[activeMenuIndex].megaMenuConfig} />
+      )}
     </nav>
   );
 };
