@@ -114,7 +114,7 @@ const ZonesOverview = () => {
           KHU CNTT TẬP TRUNG, KHU THƯƠNG MẠI TỰ DO
         </h2>
         
-        {/* Featured Zone Display */}
+        {/* Featured Zone Display with 5:2 aspect ratio */}
         <div className="relative w-full rounded-xl overflow-hidden">
           <AspectRatio ratio={5/2} className="w-full">
             <div 
@@ -134,7 +134,7 @@ const ZonesOverview = () => {
               </Button>
             </div>
             
-            {/* Content Cluster */}
+            {/* Content Cluster positioned exactly as specified */}
             <div className="absolute bottom-6 left-6 right-6 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
               {/* Left Info */}
               <div>
@@ -164,7 +164,7 @@ const ZonesOverview = () => {
           </AspectRatio>
         </div>
         
-        {/* Zone Selector Thumbnail Strip */}
+        {/* Zone Selector Thumbnail Strip with improved scrolling */}
         <ScrollArea className="w-full mt-6">
           <div className="flex gap-4 pb-4">
             {zones.map((zone) => (
@@ -191,7 +191,7 @@ const ZonesOverview = () => {
           </div>
         </ScrollArea>
         
-        {/* Grid of thumbnails */}
+        {/* Grid of thumbnails with visual indicator of selection */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-4 mt-8">
           {zones.map((zone, index) => (
             <div 
