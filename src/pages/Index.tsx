@@ -9,6 +9,7 @@ import FeaturedEvents from "../components/FeaturedEvents";
 import NewsSection from "../components/NewsSection";
 import ZonesOverview from "../components/ZonesOverview";
 import InvestmentInfo from "../components/InvestmentInfo";
+import LocationSection from "../components/LocationSection";
 import Footer from "../components/Footer";
 
 const Index = () => {
@@ -29,6 +30,7 @@ const Index = () => {
         <NewsSection />
         <ZonesOverview />
         <InvestmentInfo />
+        <LocationSection />
       </main>
       <Footer />
     </div>
