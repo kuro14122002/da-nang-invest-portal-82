@@ -1,12 +1,34 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useEffect } from 'react';
+import TopBar from "../components/TopBar";
+import HeaderBar from "../components/HeaderBar";
+import NavigationBar from "../components/NavigationBar";
+import HeroSection from "../components/HeroSection";
+import QuickLinks from "../components/QuickLinks";
+import FeaturedEvents from "../components/FeaturedEvents";
+import NewsSection from "../components/NewsSection";
+import IndustrialZones from "../components/IndustrialZones";
+import Footer from "../components/Footer";
 
 const Index = () => {
+  // Set the page title
+  useEffect(() => {
+    document.title = "DSEZA - Ban Quản Lý Khu Công Nghệ Cao và Các Khu Công Nghiệp Đà Nẵng";
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="flex flex-col min-h-screen">
+      <TopBar />
+      <HeaderBar />
+      <NavigationBar />
+      <main className="flex-1">
+        <HeroSection />
+        <QuickLinks />
+        <FeaturedEvents />
+        <NewsSection />
+        <IndustrialZones />
+      </main>
+      <Footer />
     </div>
   );
 };
