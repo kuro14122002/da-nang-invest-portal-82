@@ -1,21 +1,20 @@
 
 import { 
-  general_partner,
-  chief_financial_officer,
-  investor_relations, 
-  business_development,
-  customer_relationship_management,
-  real_estate,
-  private_equity,
-  private_debt,
-  venture_capital,
-  corporate_venture_capital,
-  hedge_fund,
-  family_offices,
-  ria,
-  wealth_management
+  User,
+  Building2,
+  Users,
+  CircleDollarSign,
+  BarChart,
+  HomeIcon,
+  Briefcase,
+  FileText,
+  Database,
+  LineChart,
+  BookOpen,
+  GraduationCap,
+  HeartHandshake,
+  Clock
 } from "lucide-react";
-import { Icon } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 // Type definitions
@@ -45,22 +44,22 @@ type MegaMenuProps = {
   config: MegaMenuConfigType;
 };
 
-// Icon mapping with Lucide icons
+// Icon mapping with standard Lucide icons
 const iconMap: Record<string, any> = {
-  "general-partner": general_partner,
-  "chief-financial-officer": chief_financial_officer,
-  "investor-relations": investor_relations,
-  "business-development": business_development,
-  "customer-relationship-management": customer_relationship_management,
-  "real-estate": real_estate,
-  "private-equity": private_equity,
-  "private-debt": private_debt,
-  "venture-capital": venture_capital,
-  "corporate-venture-capital": corporate_venture_capital,
-  "hedge-fund": hedge_fund,
-  "family-offices": family_offices,
-  "ria": ria,
-  "wealth-management": wealth_management
+  "general-partner": User,
+  "chief-financial-officer": CircleDollarSign,
+  "investor-relations": HeartHandshake,
+  "business-development": Building2,
+  "customer-relationship-management": Users,
+  "real-estate": HomeIcon,
+  "private-equity": Briefcase,
+  "private-debt": FileText,
+  "venture-capital": LineChart,
+  "corporate-venture-capital": BookOpen,
+  "hedge-fund": BarChart,
+  "family-offices": Users,
+  "ria": GraduationCap,
+  "wealth-management": Database
 };
 
 const MegaMenu = ({ config }: MegaMenuProps) => {
@@ -87,11 +86,9 @@ const MegaMenu = ({ config }: MegaMenuProps) => {
                       className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-dseza-light-hover dark:hover:bg-dseza-dark-hover transition-colors"
                     >
                       {content.iconName && iconMap[content.iconName] && (
-                        <Icon 
-                          size={20} 
-                          className="text-dseza-light-primary dark:text-dseza-dark-primary"
-                          iconNode={iconMap[content.iconName]} 
-                        />
+                        <span className="text-dseza-light-primary dark:text-dseza-dark-primary">
+                          {React.createElement(iconMap[content.iconName], { size: 20 })}
+                        </span>
                       )}
                       <span className="font-medium">{content.title}</span>
                     </a>
