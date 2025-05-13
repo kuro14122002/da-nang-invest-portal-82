@@ -54,14 +54,14 @@ export default function LocationSection() {
           {/* Right column - Content display */}
           <div className="lg:col-span-3">
             {activeTab === "vr360" ? (
-              <div className="bg-secondary dark:bg-dseza-dark-secondary rounded-lg p-4 h-[400px] flex items-center justify-center">
+              <div className="bg-secondary dark:bg-dseza-dark-secondary rounded-lg p-4 h-[450px] flex items-center justify-center">
                 <div className="text-center">
                   <h3 className="font-semibold mb-2">VR 360 Tour Placeholder</h3>
                   <p className="text-muted-foreground">https://dseza.danang.gov.vn/vr360/</p>
                 </div>
               </div>
             ) : (
-              <div className="bg-secondary dark:bg-dseza-dark-secondary rounded-lg p-4 h-[400px] flex items-center justify-center">
+              <div className="bg-secondary dark:bg-dseza-dark-secondary rounded-lg p-4 h-[450px] flex items-center justify-center">
                 <div className="text-center">
                   <h3 className="font-semibold mb-2">Digital Map Placeholder</h3>
                   <p className="text-muted-foreground">https://maps.dhpiza.vn/</p>
