@@ -9,6 +9,7 @@ import FeaturedEvents from "../components/FeaturedEvents";
 import NewsSection from "../components/NewsSection";
 import ZonesOverview from "../components/ZonesOverview";
 import InvestmentInfo from "../components/InvestmentInfo";
+import MediaLibrary from "../components/MediaLibrary";
 import LocationSection from "../components/LocationSection";
 import Footer from "../components/Footer";
 
@@ -30,6 +31,7 @@ const Index = () => {
         <NewsSection />
         <ZonesOverview />
         <InvestmentInfo />
+        <MediaLibrary />
         <LocationSection />
       </main>
       <Footer />
