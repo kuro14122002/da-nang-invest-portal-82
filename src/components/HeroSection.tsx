@@ -7,7 +7,7 @@ const HeroSection = () => {
   const [activeTab, setActiveTab] = useState("city");
   
   return (
-    <div className="relative w-full h-[500px] bg-gradient-to-r from-dseza-light-primary/90 to-dseza-light-accent/80 dark:from-dseza-dark-primary/90 dark:to-dseza-dark-accent/80">
+    <div className="relative w-full h-[100%] bg-gradient-to-r from-dseza-light-primary/90 to-dseza-light-accent/80 dark:from-dseza-dark-primary/90 dark:to-dseza-dark-accent/80">
       {/* Background image would go here in a real implementation */}
       <div 
         className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1605810230434-7631ac76ec81')] bg-cover bg-center opacity-30 dark:opacity-20"
