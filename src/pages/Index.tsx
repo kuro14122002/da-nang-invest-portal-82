@@ -8,7 +8,6 @@ import QuickLinks from "../components/QuickLinks";
 import FeaturedEvents from "../components/FeaturedEvents";
 import NewsSection from "../components/NewsSection";
 import ZonesOverview from "../components/ZonesOverview";
-import IndustrialZones from "../components/IndustrialZones";
 import Footer from "../components/Footer";
 
 const Index = () => {
@@ -28,7 +27,6 @@ const Index = () => {
         <FeaturedEvents />
         <NewsSection />
         <ZonesOverview />
-        <IndustrialZones />
       </main>
       <Footer />
     </div>
