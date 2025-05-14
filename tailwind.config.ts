@@ -1,5 +1,5 @@
-
 import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme"; // Import fontFamily
 
 export default {
 	darkMode: ["class"],
@@ -13,12 +13,22 @@ export default {
 	theme: {
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: {
+        DEFAULT: '1rem', // Padding mặc định cho màn hình nhỏ (mobile)
+        sm: '1.5rem',    // Padding cho màn hình sm trở lên
+        md: '2rem',      // Padding cho màn hình md trở lên
+        lg: '2.5rem',    // Padding cho màn hình lg trở lên
+        xl: '3rem',      // Padding cho màn hình xl trở lên
+      },
 			screens: {
 				'2xl': '1400px'
 			}
 		},
 		extend: {
+      fontFamily: {
+        sans: ["Inter", ...fontFamily.sans],
+        montserrat: ["Montserrat", ...fontFamily.sans],
+      },
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

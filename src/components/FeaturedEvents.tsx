@@ -66,10 +66,11 @@ const FeaturedEvents = () => {
   ];
 
   return (
-    <div className="py-16 px-6">
-      <div className="container mx-auto">
+    // THAY ĐỔI Ở ĐÂY: bỏ px-6, làm py responsive
+    <div className="py-12 md:py-16 bg-background"> {/* Ví dụ: py-12 cho mobile, py-16 cho md trở lên */}
+      <div className="container mx-auto"> {/* Container sẽ tự xử lý padding ngang */}
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold text-foreground">Sự kiện tiêu điểm</h2>
+          <h2 className="mb-8">SỰ KIỆN TIÊU ĐIỂM</h2>
           <a href="#" className="text-dseza-light-primary dark:text-dseza-dark-primary hover:underline">Xem tất cả</a>
         </div>
         

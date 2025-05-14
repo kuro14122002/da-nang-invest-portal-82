@@ -77,7 +77,7 @@ export default function ZonesOverview() {
   return (
     <section className="w-full py-16 px-6 bg-background">
       <div className="container mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold uppercase text-center mb-10 max-w-5xl mx-auto leading-tight">
+        <h2 className="mb-8">
           KHU CÔNG NGHỆ CAO, TRUNG TÂM VI MẠCH BÁN DẪN VÀ TRÍ TUỆ NHÂN TẠO, CÁC KHU CÔNG NGHIỆP, KHU CNTT TẬP TRUNG, KHU THƯƠNG MẠI TỰ DO
         </h2>
         

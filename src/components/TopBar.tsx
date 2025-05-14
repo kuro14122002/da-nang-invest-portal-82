@@ -84,7 +84,7 @@ const TopBar = () => {
           </a>
           <button onClick={toggleLanguage} className="flex items-center hover:text-dseza-light-primary dark:hover:text-dseza-dark-primary transition-colors">
             <GlobeIcon className="h-4 w-4 mr-1" />
-            <span>{language === 'vi' ? 'English' : 'Tiếng Việt'}</span>
+            <span>{language === 'vi' ? 'Tiếng Việt' : 'English'}</span>
           </button>
           <Button 
             variant="ghost" 
@@ -93,7 +93,7 @@ const TopBar = () => {
             className="flex items-center p-0 hover:bg-transparent hover:text-dseza-light-primary dark:hover:text-dseza-dark-primary"
           >
             {isDark ? <SunIcon className="h-4 w-4 mr-1" /> : <MoonIcon className="h-4 w-4 mr-1" />}
-            <span>{isDark ? (language === 'vi' ? 'Chế độ sáng' : 'Light mode') : (language === 'vi' ? 'Chế độ tối' : 'Dark mode')}</span>
+            <span>{isDark ? (language === 'vi' ? 'Chế độ tối' : 'Dark mode') : (language === 'vi' ? 'Chế độ sáng' : 'Light mode')}</span>
           </Button>
         </div>
       </div>

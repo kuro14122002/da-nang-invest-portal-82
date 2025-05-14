@@ -1,4 +1,5 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -91,13 +92,18 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
+  h1, h3, h4, h5, h6 {
+    @apply font-montserrat;
+  }
+  h2 {
+    @apply font-bold text-xl sm:text-2xl text-primary;}
 }
 
 @layer components {
   .glass-nav {
-    @apply bg-white/70 dark:bg-dseza-dark-secondary/80 backdrop-blur-md border-b border-gray-200 dark:border-dseza-dark-hover;
+    @apply bg-white/50 dark:bg-dseza-dark-secondary/60 backdrop-blur-md border-b border-white/20 dark:border-dseza-dark-hover/30;
   }
   
   .dropdown-content {
@@ -115,15 +121,15 @@
   }
 
   .mega-menu-container::-webkit-scrollbar-track {
-    @apply bg-gray-100 dark:bg-gray-700;
+    @apply bg-gray-100/50 dark:bg-gray-700/50;
   }
 
   .mega-menu-container::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 dark:bg-gray-500 rounded-full;
+    @apply bg-gray-300/70 dark:bg-gray-500/70 rounded-full;
   }
 
   .mega-menu-container::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-400 dark:bg-gray-400;
+    @apply bg-gray-400/80 dark:bg-gray-400/80;
   }
 }
 
